@@ -1,260 +1,373 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin, Shield, Truck, HelpCircle, Info, MessageCircle, CreditCard, Package, Users } from 'lucide-react';
+import { 
+  Facebook, Instagram, Twitter, Mail, Phone, MapPin, 
+  Shield, Truck, HelpCircle, Info, MessageCircle, 
+  Package, Users, CreditCard, Heart, Star, Globe,
+  ArrowRight, CheckCircle, Gift, Clock, ChevronUp
+} from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const footerSections = [
     {
-      title: 'Shop',
+      title: 'Shop By Category',
       links: [
-        { name: 'All Products', path: '/products' },
-        { name: 'Featured Products', path: '/products?featured=true' },
-        { name: "Men's Collection", path: '/products?category=T-Shirts&gender=men' },
-        { name: "Women's Collection", path: '/products?category=T-Shirts&gender=women' },
-        { name: 'Mugs', path: '/products?category=Mugs' },
-        { name: 'Accessories', path: '/products?category=Accessories' },
+        { name: 'All Products', path: '/products', featured: true },
+        { name: "Men's T-Shirts", path: '/products?category=T-Shirts&gender=men' },
+        { name: "Women's T-Shirts", path: '/products?category=T-Shirts&gender=women' },
+        { name: 'Premium Mugs', path: '/products?category=Mugs' },
+        { name: 'TV Show Accessories', path: '/products?category=Accessories' },
+        { name: 'Featured Products', path: '/products?featured=true', featured: true },
+       
       ]
     },
     {
-      title: 'Customer Service',
+      title: 'Customer Support',
       links: [
-        { name: 'My Orders', path: '/my-orders' },
-        { name: 'Track Order', path: '/track-order' },
-        { name: 'Shipping Policy', path: '/shipping-policy', icon: <Truck className="w-4 h-4 inline mr-1" /> },
-        { name: 'Returns & Refunds', path: '/returns' },
-        { name: 'FAQ', path: '/faq', icon: <HelpCircle className="w-4 h-4 inline mr-1" /> },
-        { name: 'Contact Us', path: '/contact', icon: <MessageCircle className="w-4 h-4 inline mr-1" /> },
+        { name: 'My Orders', path: '/my-orders', icon: <Package className="w-4 h-4 mr-2" /> },
+        { name: 'Track Order', path: '/track-order', icon: <Truck className="w-4 h-4 mr-2" /> },
+        { name: 'Shipping Policy', path: '/shipping-policy', icon: <Truck className="w-4 h-4 mr-2" /> },
+        { name: 'FAQ & Help Center', path: '/faq', icon: <HelpCircle className="w-4 h-4 mr-2" /> },
+        { name: 'Contact Us', path: '/contact', icon: <MessageCircle className="w-4 h-4 mr-2" /> },
       ]
     },
     {
-      title: 'Company',
+      title: 'Company & Legal',
       links: [
-        { name: 'About Us', path: '/about', icon: <Info className="w-4 h-4 inline mr-1" /> },
-        { name: 'Privacy Policy', path: '/privacy-policy', icon: <Shield className="w-4 h-4 inline mr-1" /> },
-        { name: 'Terms & Conditions', path: '/terms' },
-        { name: 'Blog', path: '/blog' },
+        { name: 'About Us', path: '/about', icon: <Info className="w-4 h-4 mr-2" /> },
+        { name: 'Privacy Policy', path: '/privacy-policy', icon: <Shield className="w-4 h-4 mr-2" /> },
+        { name: 'Dropshipping Model', path: '/dropshipping' },
         { name: 'Careers', path: '/careers' },
-        { name: 'Affiliate Program', path: '/affiliate' },
       ]
-    },
-    {
-      title: 'Payment Methods',
-      content: (
-        <div className="space-y-3">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-              <span className="text-green-600 font-bold text-sm">UPI</span>
-            </div>
-            <span className="text-gray-400">UPI Payments Only</span>
-          </div>
-          <p className="text-sm text-gray-400">
-            We accept all UPI apps: Google Pay, PhonePe, Paytm, and more
-          </p>
-          <div className="pt-2">
-            <p className="text-sm font-medium text-white mb-1">Shipping Info:</p>
-            <p className="text-sm text-green-400">✓ Free shipping on ₹199+</p>
-            <p className="text-sm text-blue-400">✓ ₹9 only below ₹199</p>
-          </div>
-        </div>
-      )
     }
   ];
 
+  const trustBadges = [
+    { icon: <Shield className="w-8 h-8" />, title: 'Secure Payment', desc: 'UPI Only', color: 'text-green-400' },
+    { icon: <Truck className="w-8 h-8" />, title: 'Free Shipping', desc: 'On ₹199+', color: 'text-blue-400' },
+    { icon: <Clock className="w-8 h-8" />, title: '24/7 Support', desc: 'WhatsApp Chat', color: 'text-purple-400' },
+    { icon: <Package className="w-8 h-8" />, title: 'Easy Processing', desc: 'Within 7 Days', color: 'text-orange-400' },
+    { icon: <Gift className="w-8 h-8" />, title: 'Gift Ready', desc: 'Free Gift Wrap', color: 'text-pink-400' },
+  ];
+
+  const upiApps = ['Google Pay', 'PhonePe', 'Paytm', 'Amazon Pay', 'BHIM UPI'];
+
+  // Function to handle link clicks - scrolls to top
+  const handleLinkClick = (e) => {
+    // Only scroll if we're navigating within the same app (not external links)
+    const isExternal = e.target.href.includes('http') || e.target.href.includes('mailto') || e.target.href.includes('tel');
+    
+    if (!isExternal) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Function to handle scroll to top
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
-    <footer className="bg-gray-900 text-white mt-20">
+    <footer className="bg-gray-950 text-white mt-auto">
+      {/* Trust Badges Section */}
+      <div className="bg-gradient-to-r from-gray-900 to-gray-800 py-6">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {trustBadges.map((badge, index) => (
+              <div key={index} className="flex flex-col items-center p-3">
+                <div className={`mb-2 ${badge.color}`}>
+                  {badge.icon}
+                </div>
+                <p className="text-sm font-semibold text-center">{badge.title}</p>
+                <p className="text-xs text-gray-400 text-center">{badge.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Main Footer */}
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          {/* Brand Column */}
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Brand Column - Newsletter removed as requested */}
+          <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
                 <span className="text-white font-bold text-2xl">TV</span>
               </div>
               <div>
-                <h2 className="text-2xl font-bold">TV Merchandise</h2>
-                <p className="text-gray-400">Official Fan Store</p>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  ShowmoMarket
+                </h2>
+                <p className="text-sm text-gray-400">Official Fan Store</p>
               </div>
             </div>
-            <p className="text-gray-400 mb-6 max-w-md">
-              Your premier destination for exclusive TV show merchandise. We connect you directly 
-              with global suppliers through our unique dropshipping model, offering authentic 
-              products at unbeatable prices.
-            </p>
             
-            {/* Social Media */}
-            <div className="flex space-x-4 mb-6">
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-pink-600 transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-400 transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors">
-                <YouTubeIcon className="w-5 h-5" />
-              </a>
-            </div>
+            <p className="text-gray-400 mb-6 text-sm leading-relaxed">
+              Your premier destination for exclusive TV show merchandise. 
+              We connect you directly with global suppliers through our 
+              unique dropshipping model.
+            </p>
 
-            {/* Newsletter */}
-            <div className="mb-6">
-              <p className="text-sm font-medium mb-2">Subscribe to our newsletter</p>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  className="flex-grow px-4 py-2 bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg font-medium">
-                  Subscribe
-                </button>
+            {/* Social Media */}
+            <div>
+              <p className="text-sm font-semibold mb-3 text-gray-300">Follow Us</p>
+              <div className="flex space-x-3">
+                <a 
+                  href="#" 
+                  className="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="w-5 h-5" />
+                </a>
+                <a 
+                  href="#" 
+                  className="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-5 h-5" />
+                </a>
+                <a 
+                  href="#" 
+                  className="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1"
+                  aria-label="Twitter"
+                >
+                  <Twitter className="w-5 h-5" />
+                </a>
+                <a 
+                  href="#" 
+                  className="w-10 h-10 bg-gray-800 hover:bg-red-600 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1"
+                  aria-label="YouTube"
+                >
+                  <YoutubeIcon className="w-5 h-5" />
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Other Columns */}
-          {footerSections.map((section, index) => (
-            <div key={index}>
-              <h3 className="text-lg font-semibold mb-4 flex items-center">
+          {/* Other Sections */}
+          {footerSections.map((section, sectionIndex) => (
+            <div key={sectionIndex}>
+              <h3 className="text-lg font-bold mb-5 text-white flex items-center">
                 {section.title}
+                <span className="ml-2 w-6 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"></span>
               </h3>
-              {section.links ? (
-                <ul className="space-y-3">
-                  {section.links.map((link, linkIndex) => (
-                    <li key={linkIndex}>
-                      <Link 
-                        to={link.path} 
-                        className="text-gray-400 hover:text-white transition-colors flex items-center"
-                      >
-                        {link.icon && link.icon}
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                section.content
-              )}
+              <ul className="space-y-3">
+                {section.links.map((link, linkIndex) => (
+                  <li key={linkIndex}>
+                    <Link 
+                      to={link.path} 
+                      onClick={handleLinkClick}
+                      className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group text-sm"
+                    >
+                      {link.icon && (
+                        <span className="mr-2 opacity-70 group-hover:opacity-100">
+                          {link.icon}
+                        </span>
+                      )}
+                      {link.name}
+                      {link.featured && (
+                        <span className="ml-2 px-2 py-0.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs rounded-full">
+                          Hot
+                        </span>
+                      )}
+                      <ArrowRight className="w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
+
+          {/* Payment & Shipping Info */}
+          <div>
+            <h3 className="text-lg font-bold mb-5 text-white flex items-center">
+              Payment & Shipping
+              <span className="ml-2 w-6 h-0.5 bg-gradient-to-r from-green-500 to-blue-500"></span>
+            </h3>
+            
+            <div className="space-y-5">
+              {/* UPI Payments */}
+              <div>
+                <div className="flex items-center mb-3">
+                  <CreditCard className="w-5 h-5 text-green-400 mr-2" />
+                  <p className="text-sm font-semibold">UPI Payments Only</p>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {upiApps.map((app, index) => (
+                    <div key={index} className="px-3 py-1 bg-gray-800 rounded-full text-xs">
+                      {app}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Shipping Charges */}
+              <div className="bg-gradient-to-r from-gray-800 to-gray-900 p-4 rounded-xl border border-gray-700">
+                <div className="flex items-center mb-2">
+                  <Truck className="w-5 h-5 text-blue-400 mr-2" />
+                  <p className="text-sm font-semibold">Shipping Charges</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-400">Orders above ₹199</span>
+                    <span className="px-3 py-1 bg-green-900/30 text-green-400 text-xs rounded-full font-semibold">
+                      FREE
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-400">Orders below ₹199</span>
+                    <span className="px-3 py-1 bg-blue-900/30 text-blue-400 text-xs rounded-full font-semibold">
+                      ₹9 ONLY
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Delivery Time */}
+              <div className="flex items-start">
+                <Clock className="w-5 h-5 text-purple-400 mr-3 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-semibold mb-1">Delivery Time</p>
+                  <p className="text-xs text-gray-400">3-7 business days across India</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Contact Bar */}
-        <div className="mt-12 pt-8 border-t border-gray-800 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-blue-900/30 rounded-full flex items-center justify-center">
-              <Phone className="w-5 h-5 text-blue-400" />
+        {/* Contact & Info Bar */}
+        <div className="mt-12 pt-8 border-t border-gray-800">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Contact Info */}
+            <div className="space-y-4">
+              <div className="flex items-start">
+                <div className="w-10 h-10 bg-blue-900/20 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                  <Phone className="w-5 h-5 text-blue-400" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold mb-1">24/7 WhatsApp Support</p>
+                  <a 
+                    href="https://wa.me/701503024"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-green-400 transition-colors font-medium"
+                  >
+                    Click to chat instantly
+                  </a>
+                  <p className="text-xs text-gray-500 mt-1"></p>
+                </div>
+              </div>
             </div>
-            <div>
-              <p className="text-sm text-gray-400">24/7 Support</p>
-              <a 
-                href="https://wa.me/919999999999"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white font-medium hover:text-green-400"
-              >
-                +91 99999 99999
-              </a>
+
+            {/* Email Info */}
+            <div className="space-y-4">
+              <div className="flex items-start">
+                <div className="w-10 h-10 bg-purple-900/20 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                  <Mail className="w-5 h-5 text-purple-400" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold mb-1">Email Support</p>
+                  <a 
+                    href="mailto:support@tvmerch.com" 
+                    className="text-white hover:text-purple-400 transition-colors font-medium"
+                  >
+                    support@tvmerch.com
+                  </a>
+                  <p className="text-xs text-gray-500 mt-1">Response within 24 hours</p>
+                </div>
+              </div>
             </div>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-blue-900/30 rounded-full flex items-center justify-center">
-              <Mail className="w-5 h-5 text-blue-400" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-400">Email Us</p>
-              <a href="mailto:support@tvmerch.com" className="text-white font-medium hover:text-blue-400">
-                support@tvmerch.com
-              </a>
-            </div>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-blue-900/30 rounded-full flex items-center justify-center">
-              <Package className="w-5 h-5 text-blue-400" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-400">Shipping Policy</p>
-              <Link to="/shipping-policy" className="text-white font-medium hover:text-blue-400">
-                ₹199+ Free | Below ₹199: ₹9 only
-              </Link>
+
+            {/* Business Info */}
+            <div className="space-y-4">
+              <div className="flex items-start">
+                <div className="w-10 h-10 bg-green-900/20 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                  <Clock className="w-5 h-5 text-green-400" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold mb-1">Business Hours</p>
+                  <div className="text-sm text-gray-400">
+                    <p>Mon-Fri: 10:00 AM - 8:00 PM</p>
+                    <p>Saturday: 10:00 AM - 6:00 PM</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="bg-gray-950 py-6">
+      {/* Bottom Copyright Bar */}
+      <div className="bg-black py-6">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-center md:text-left mb-4 md:mb-0">
-              <p className="text-gray-400">
-                © {currentYear} TV Merchandise. All rights reserved.
+              <p className="text-gray-400 text-sm">
+                © {currentYear} <span className="font-semibold"> ShowmoMarket</span>. All rights reserved.
               </p>
-              <p className="text-gray-500 text-sm mt-1">
-                Dropshipping excellence • Serving customers across India
+              <p className="text-gray-500 text-xs mt-1">
+                Made with <Heart className="w-3 h-3 inline text-red-500" /> for TV fans
               </p>
             </div>
             
-            <div className="flex flex-wrap justify-center gap-6">
-              <Link to="/privacy-policy" className="text-gray-400 hover:text-white text-sm">
+            <div className="flex flex-wrap justify-center gap-4 text-sm">
+              <Link 
+                to="/privacy-policy" 
+                onClick={handleLinkClick}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="text-gray-400 hover:text-white text-sm">
-                Terms of Service
-              </Link>
-              <Link to="/shipping-policy" className="text-gray-400 hover:text-white text-sm">
+              <span className="text-gray-600">•</span>
+              
+              <Link 
+                to="/shipping-policy" 
+                onClick={handleLinkClick}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
                 Shipping Policy
               </Link>
-              <Link to="/refund-policy" className="text-gray-400 hover:text-white text-sm">
-                Refund Policy
-              </Link>
-              <Link to="/contact" className="text-gray-400 hover:text-white text-sm">
+              <span className="text-gray-600">•</span>
+              <Link 
+                to="/contact" 
+                onClick={handleLinkClick}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
                 Contact
               </Link>
+            </div>
+
+            <div className="mt-4 md:mt-0 flex items-center">
+              <Globe className="w-4 h-4 text-gray-400 mr-2" />
+              <span className="text-gray-400 text-sm">India • Dropshipping Excellence</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Trust Badges */}
-      <div className="bg-gray-800 py-4">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div className="flex flex-col items-center">
-              <Shield className="w-8 h-8 text-green-400 mb-2" />
-              <span className="text-sm font-medium">Secure Payments</span>
-              <span className="text-xs text-gray-400">UPI Only</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <Truck className="w-8 h-8 text-blue-400 mb-2" />
-              <span className="text-sm font-medium">Free Shipping</span>
-              <span className="text-xs text-gray-400">On ₹199+</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <Users className="w-8 h-8 text-purple-400 mb-2" />
-              <span className="text-sm font-medium">24/7 Support</span>
-              <span className="text-xs text-gray-400">WhatsApp</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <Package className="w-8 h-8 text-orange-400 mb-2" />
-              <span className="text-sm font-medium">Easy Returns</span>
-              <span className="text-xs text-gray-400">7 Days Policy</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Scroll to Top Button */}
+      <button
+        onClick={scrollToTop}
+        className="fixed bottom-6 right-6 w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 z-50"
+        aria-label="Scroll to top"
+      >
+        <ChevronUp className="w-5 h-5" />
+      </button>
     </footer>
   );
 };
 
-// YouTube Icon component (since it's not in lucide-react by default)
-const YouTubeIcon = ({ className }) => (
+// YouTube Icon component
+const YoutubeIcon = ({ className }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
     <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
   </svg>
